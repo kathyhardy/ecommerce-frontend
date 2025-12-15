@@ -1,0 +1,14 @@
+import products from "./products.json";
+
+function App() {
+  return (
+    <div>
+      {products.map(p => (
+        <div key={p.id}>
+          <h3>{p.name}</h3>
+          <p>${p.price}</p>
+        </div>
+      ))}
+    </div>
+  );
+}

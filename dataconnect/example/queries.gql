@@ -1,0 +1,64 @@
+mutation CreateMembershipType(
+  $name: String!
+  $description: String!
+  $price: Float!
+  $features: [String!]!
+) @auth(level: USER) {
+  membershipType_insert(
+    data: { name: $name, description: $description, price: $price, features: $features }
+  )
+}
+
+query ListMembershipTypes @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public") {
+  membershipTypes {
+    id
+    name
+    description
+    price
+    features
+  }
+}
+
+mutation UpdateDigitalAsset(
+  $id: UUID!
+  $title: String
+  $description: String
+  $fileUrl: String
+  $thumbnailUrl: String
+  $type: String
+  $categories: [String!]
+) @auth(level: USER) {
+  digitalAsset_update(
+    id: $id
+    data: {
+      title: $title
+      description: $description
+      fileUrl: $fileUrl
+      thumbnailUrl: $thumbnailUrl
+      type: $type
+      categories: $categories
+    }
+  )
+}
+
+query GetUserSubscription($id: UUID!) @auth(level: USER) {
+  userSubscription(id: $id) {
+    id
+    startDate
+    endDate
+    autoRenew
+    status
+    membershipType {
+      id
+      name
+      description
+      price
+    }
+    user {
+      id
+      email
+      displayName
+      photoUrl
+    }
+  }
+}

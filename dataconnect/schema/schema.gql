@@ -1,0 +1,42 @@
+type User @table {
+  email: String!
+  hashedPassword: String!
+  createdAt: Timestamp!
+  displayName: String
+  photoUrl: String
+}
+
+type MembershipType @table {
+  name: String!
+  price: Float!
+  description: String!
+  createdAt: Timestamp!
+  features: [String]
+}
+
+type UserSubscription @table {
+  user: User!
+  membershipType: MembershipType!
+  startDate: Timestamp!
+  endDate: Timestamp!
+  status: String!
+  createdAt: Timestamp!
+  autoRenew: Boolean
+}
+
+type DigitalAsset @table {
+  title: String!
+  type: String!
+  fileUrl: String!
+  createdAt: Timestamp!
+  description: String
+  thumbnailUrl: String
+  categories: [String]
+}
+
+type MembershipAsset @table(key: ["membershipType", "digitalAsset"]) {
+  membershipType: MembershipType!
+  digitalAsset: DigitalAsset!
+  accessLevel: String!
+  createdAt: Timestamp!
+}
